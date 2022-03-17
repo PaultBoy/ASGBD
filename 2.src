@@ -1,0 +1,121 @@
+DELIMITER $$
+
+drop procedure if exists simple$$
+create procedure simple(numero int)
+begin
+	if(numero>=18) then 
+	     select "ES MAYOR DE EDAD";
+	end if;
+end;
+$$
+drop procedure if exists doble$$
+create procedure doble(numero int)
+begin
+	if(numero>=18) then
+	     select "ES MAYOR DE EDAD";
+	else
+	     select "ES MENOR DE EDAD";
+	end if; 
+end;
+$$
+drop procedure if exists anidado$$
+create procedure anidado(numero int)
+begin
+	if(numero>=18) then
+	     select "ES MAYOR DE EDAD";
+	else
+	     if(numero>=12) then
+		select "ADOLESCENTE";
+	     else
+		select "NIÑO";
+	     end if;
+	end if;
+end;
+$$
+drop procedure if exists masanidado$$
+create procedure masanidado(numero int)
+begin
+	if(numero>=18) then
+	     select "MAYOR DE EDAD";
+	else
+	     if(numero>=12) then
+		select "ADOLESCENTE";
+	     else
+		select "NIÑO";
+	     end if;
+	end if;
+	if(numero >= 16) and (numero < 65) then
+		select "EDAD DE TRABAJAR";
+	end if;
+end;
+$$
+drop procedure if exists multiple$$
+create procedure multiple(numero int)
+begin
+	if (numero<12) then
+	    select ("ES UN NIÑO");
+	elseif (numero >= 12) and (numero < 18) then
+	    select ("ES UN ADOLESCENTE");
+	elseif (numero >= 18) and (numero < 65) then
+	    select ("ES MAYOR DE EDAD");
+	elseif (numero >= 65) then
+	    select ("ESTÁ JUBILADO");
+	end if;
+	if (numero > 16) and (numero < 64) then
+	    select "ES TRABAJADOR";
+	end if;
+end;
+$$
+drop procedure if exists multiple2$$
+create procedure multiple2(numero int)
+begin
+case
+	when (numero<12) then
+	    select ("ES UN NIÑO");
+	when (numero >= 12) and (numero < 18) then
+	    select ("ES UN ADOLESCENTE");
+	when (numero >= 18) and (numero < 65) then
+	    select ("ES MAYOR DE EDAD");
+	else
+	    select ("ESTÁ JUBILADO");
+end case;
+	if (numero >= 16) and (numero < 65) then
+	    select "ES TRABAJADOR";
+	end if;
+end;
+$$
+drop procedure if exists multiple3$$
+create procedure multiple3(numero int)
+begin
+case
+	when (numero<16) then
+	    select ("Es menor de edad");
+	when (numero<16) then
+	    select ("Es menor de edad");
+	else
+	    select ("Es menor de edad");
+end case;
+end;
+$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `multipleConcat`(numero int)
+BEGIN
+	declare t varchar(45);
+    set t = "Es";
+    case
+		when(numero < 12) then
+			set t = concat(t," un nino");
+		when(numero >= 12 and numero <18 ) then
+			set t = concat(t, " un adolescente");
+		when(numero >= 18 and numero < 65) then
+			set t = concat(t, " mayor de edad");
+		else
+			set t= concat(t, " un jubilado");
+	end case;
+	if (numero >=16 and numero<65) then
+		set t= concat(t, " y esta trabajando");
+	else
+		set t=concat(t, " y no esta trabajando");
+	end if;
+    select t;
+END
+DELIMITER ;

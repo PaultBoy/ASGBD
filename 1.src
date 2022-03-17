@@ -1,0 +1,8 @@
+DELIMITER $$
+create procedure prueba()
+begin
+	declare x int;
+	set x=25;
+	select x;
+end
+$$
